@@ -1,0 +1,63 @@
+{
+  "name": "flo_mossa",
+  "version": "1.0.0",
+  "description": "Floating note desktop app for macOS",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "build:mac": "electron-builder --mac dmg",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^39.1.2",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "docx": "^9.5.1"
+  },
+  "build": {
+    "productName": "Flo Mossa",
+    "appId": "com.wangye.flo-mossa",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "app/**/*",
+      "images/**/*",
+      "main.js",
+      "preload.js",
+      "package.json",
+      "!local-notes-cache/**/*",
+      "!local-notes/**/*",
+      "!**/*.md"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg"
+      ],
+      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
+  }
+}

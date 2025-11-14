@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>悬浮窗</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 窗口控制按钮（右上角） -->
+    <div id="windowControls">
+      <button id="hideButton" class="window-control-btn" title="隐藏到菜单栏">−</button>
+      <button id="closeButton" class="window-control-btn" title="关闭">×</button>
+    </div>
+    
+    <!-- 标签选择器 + 小标题（同一行） -->
+    <div id="tagTitleRow">
+      <select id="tagSelector">
+        <option value="">选择标签</option>
+        <option value="product">产品能力</option>
+        <option value="model-eng">模型工程</option>
+        <option value="model-train">模型训练</option>
+        <option value="growth">成长思考</option>
+        <option value="other">其他</option>
+      </select>
+      <input type="text" id="titleInput" placeholder="小标题">
+    </div>
+
+    <!-- 来源输入框 -->
+    <input type="text" id="sourceInput" placeholder="来源">
+
+    <!-- 笔记内容文本框（可滚动） -->
+    <textarea id="contentTextarea" placeholder="笔记内容"></textarea>
+
+    <!-- 截图拖拽区 -->
+    <div id="screenshotDropzone">
+      <div id="screenshotDropzoneText">拖拽图片到这里、点击上传或粘贴图片（Cmd+V）</div>
+      <button id="fileSelectButton" type="button" class="upload-button btn-glass-soft">上传图片</button>
+      <input type="file" id="fileInput" accept="image/*" style="display: none;" multiple>
+    </div>
+
+    <!-- 缩略图展示区（带成功提示） -->
+    <div id="thumbnailContainer">
+      <!-- 缩略图将动态添加到这里，每个图片带成功提示 -->
+    </div>
+
+    <!-- 按钮区域（右对齐） -->
+    <div id="buttonRow">
+      <button id="cacheButton">缓存</button>
+      <button id="submitButton">提交</button>
+    </div>
+
+    <!-- 缓存数量提示 -->
+    <div id="cacheCount">已缓存 0 条</div>
+  </div>
+  <script src="scripts/renderer.js"></script>
+</body>
+</html>
