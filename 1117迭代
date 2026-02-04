@@ -1,0 +1,54 @@
+1. 快捷键-
+1.1 支持comand+z的内容撤回
+Please add support for keyboard shortcuts:
+- Cmd+Z → undo
+- Cmd+Shift+Z → redo
+Ensure the undo history works inside all textareas and the note content editor.
+1.2 粘贴 ⌘ + V用于图片粘贴非常重要
+1.3  缓存当前笔记 ⌘ + S 和“保存”概念一致，非常直觉，建议和“提交”功能区分开
+1.4 提交当前笔记 ⌘ + Enter 和“保存”概念一致，非常直觉，建议和“提交”功能区分开
+
+
+2. 缓存的整理
+多次缓存，每个笔记片段之间似乎不会自动分行
+每次缓存一个片段，都自动在最前面换行一次
+
+重新考虑缓存和提交的笔记片段关系，是否一个json作为一次提交，多次缓存会合并为一个json和dox片段
+
+3. 考虑docx中不能自动加载和存储图片
+你已经能保存图片到本地，JSON 记录图片路径，docx 仍然只有文字，没有图片
+目前会保存一个json和docx版本，json中会有图片的本地路径，docx中只有文字，没有图片，但是docx中不能自动加载和存储图片
+Replace the current docx generation method with the official “docx” npm library.
+When exporting:
+- Insert text chunks as Paragraph.
+- Insert images using ImageRun with fs.readFileSync(imagePath).
+- Ensure images are embedded inside the docx file, not referenced by path.
+
+使用 docx 官方库（npm 包：docx）：
+import { Document, Packer, Paragraph, ImageRun } from "docx";
+图片插入：
+new ImageRun({
+  data: fs.readFileSync(imagePath),
+  transformation: { width: 400, height: 300 }
+})
+此方式会把图片二进制嵌入 docx，Notion、飞书、WPS 都可正常渲染。
+
+4.智能标题召回（关键词 / 向量召回）
+关闭app后，用户会忘记之前的类似标题，是否考虑添加一个自动化基于关键词召回类似标题选择的功能
+- 关键词匹配
+- 向量召回
+你希望：
+输入 “elon” → 自动召回历史 title，比如 “How Elon Works”
+Implement a title suggestion feature:
+- When user types in the title field, automatically search previous titles.
+- Use fuzzy search (Fuse.js) for relevance ranking.
+- Display 5 best matches as dropdown suggestions.
+
+5. 重新设计UI
+5.1 为图片增加删除功能，可以最方便和快捷删除图片
+在已上传的图片下方，明确提供“删除”或“替换”的快捷操作（如一个小叉号），方便用户修改。
+5.2 状态提示： “success!” 的提示文字略显突兀。如果要在上传完成后提示成功，可以考虑使用更柔和的、短暂的浮动通知（Toast Message）
+
+
+6. 考虑开发一个全新的复习模块，基于来源和笔记，协助大脑复盘重要的info
+
